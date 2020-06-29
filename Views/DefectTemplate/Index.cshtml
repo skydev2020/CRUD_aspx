@@ -1,0 +1,57 @@
+﻿@model IEnumerable<EF_CRUD.Models.DefectTemplate>
+
+@{
+    ViewBag.Title = "Defect Template";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table style="width:100%;">
+    <tr>
+        <td style="width:80%;">
+            <button onclick="location.href='@Url.Action("Create", "DefectTemplate")';return false;" class="btn btn-default">New Defect</button>
+        </td>
+    </tr>
+</table>
+
+<table class="table">
+    <tr class="TableHeader">
+        <th>
+            @Html.DisplayNameFor(model => model.DefectGroupId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DefectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DefectCost)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @foreach (var gn in ViewBag.GroupNames)
+                {
+                    if (gn.DefectGroupId == item.DefectGroupId)
+                    {
+                        @gn.GroupName
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefectCost)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.DefectTemplateId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.DefectTemplateId })
+            </td>
+        </tr>
+    }
+
+</table>

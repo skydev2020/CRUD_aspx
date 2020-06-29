@@ -1,0 +1,26 @@
+﻿@model EF_CRUD.Models.Permission
+
+@{
+    ViewBag.Title = "Permission Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Permission Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PermissionType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PermissionType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PermissionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

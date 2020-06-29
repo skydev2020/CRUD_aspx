@@ -1,0 +1,117 @@
+﻿@model IEnumerable<EF_CRUD.View_Models.vmCarrier>
+
+@{
+    ViewBag.Title = "Carriers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm("Index", "Carriers", FormMethod.Post, new { enctype = "multipart/form-data", @class = "carrier_form", id = "carrier_form" }))
+{
+    <table style="width:100%; margin-right:auto; margin-left:auto;">
+        <tr style="padding:2px">
+            <td style="width:45%; padding:2px">
+                <button onclick="location.href='@Url.Action("Create", "Carriers")';return false;" class="btn btn-default">New Carrier</button>
+            </td>
+            <td style="width:35%; padding:2px; text-align:right;">
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td style="width:10%; padding:2px">
+            </td>
+            <td style="width:10%; padding:2px">
+                @{
+                    var active = "";
+                    var inactive = "";
+                    if (Request["active"] == "true" || Request["active"] == null)
+                    {
+                        active = "checked";
+                    }
+                    else
+                    {
+                        inactive = "checked";
+                    }
+
+                }
+                <input type="radio" id="true" name="active" value="true" @Html.Raw(active) onclick="SubmitForm()" />Active
+                &nbsp;
+                <input type="radio" id="false" name="active" value="false" @Html.Raw(inactive) onclick="SubmitForm()" />Inactive
+            </td>
+        </tr>
+    </table>
+}
+
+@using (Html.BeginForm("ChangeOrder", "Carriers", FormMethod.Post, new { enctype = "multipart/form-data", @class = "changeorder_form", id = "changeorder_form" }))
+{
+    <table class="table" style="width:100%;">
+        <tr class="TableHeader">
+            <th style="width:30%; vertical-align:middle; text-align:right">
+                @Html.DisplayNameFor(model => model.ImageName)
+            </th>
+            <th style="width:30%; vertical-align:middle; text-align:center; font-weight:bold;">
+                @Html.DisplayNameFor(model => model.CarrierName)
+            </th>
+            <th style="width:10%; vertical-align:middle; text-align:center; font-weight:bold;">
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th style="width:30%; text-align:center; vertical-align:middle;"></th>
+        </tr>
+    </table>
+    <table class="table" style="width:100%;">
+        @{ var i = 0; }
+        @foreach (var item in Model)
+        {
+            var classStyle = "AltRow";
+            if (i == 0) { classStyle = ""; i--; } else { i++; }
+            <tr class="@classStyle">
+                <td style="width:29%; vertical-align:middle; text-align:right">
+                    @if (@item.ImageName != null)
+                    {
+                        <img src="@ViewBag.imageLocation/@item.ImageName" style="width: 90px; height: 43px;" />
+                    }
+                </td>
+                <td style="width:32%; vertical-align:middle; text-align:center; font-weight:bold;">
+                    @Html.DisplayFor(modelItem => item.CarrierName)
+                </td>
+                <td style="width:10%; vertical-align:middle; text-align:center; font-weight:bold;">
+                    <select id="@item.CarrierId@Html.Raw("_CarrierOrder")" name="@item.CarrierId@Html.Raw("_CarrierOrder")" class="form-control" style="width:60px;" onchange="ChangeOrder()">
+                        @{ var count = 1; }
+                        @foreach (var carrierOrder in ViewBag.CarrierOrder)
+                        {
+                            <option value="@count"
+                                    @if (count == item.Order) { @Html.Raw(" selected='true'") ; }>
+                                @count
+                            </option>
+                            count = count + 1;
+                        }
+                        }
+                    </select>
+                </td>
+                <td style="width:30%; text-align:center; vertical-align:middle;">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CarrierId }) |
+                    @if (item.Active == true)
+                    {
+                        @Html.ActionLink("Mark Inactive", "ToggleInactive", new { id = item.CarrierId })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Mark Active", "ToggleInactive", new { id = item.CarrierId })
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<script>
+    function SubmitForm() {
+        var x = document.getElementsByClassName("carrier_form");
+        x[0].submit();
+    }
+
+    function ChangeOrder() {
+        var x = document.getElementsByClassName("changeorder_form");
+        x[0].submit();
+    }
+</script>

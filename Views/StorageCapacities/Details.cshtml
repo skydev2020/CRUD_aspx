@@ -1,0 +1,26 @@
+﻿@model EF_CRUD.Models.StorageCapacity
+
+@{
+    ViewBag.Title = "Storage Capacity Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Storage Capacity Detail</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StorageCapacity1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StorageCapacity1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StorageCapacityId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

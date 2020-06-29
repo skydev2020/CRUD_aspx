@@ -1,0 +1,43 @@
+﻿@model EF_CRUD.Models.DefectTemplate
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DefectTemplate</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DefectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DefectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DefectCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DefectCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DefectGroupId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DefectGroupId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DefectTemplateId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

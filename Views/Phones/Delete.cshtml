@@ -1,0 +1,44 @@
+﻿@model EF_CRUD.Models.Phone
+
+@{
+    ViewBag.Title = "Delete Brand";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete Brand</h2>
+
+<h3>Are you sure you want to delete this Brand?</h3>
+
+<div style="height:20px;"></div>
+<div style="width:600px; margin-right:auto; margin-left:auto;" class="text-danger">@ViewBag.Message</div>
+
+@using (Html.BeginForm("Delete", "Phones", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PhoneId)
+
+        <div style="height:20px;"></div>
+        <table style="width:30%; margin-left:100px; margin-right:auto;">
+            <tr>
+                <td style="padding:5px; text-align:center;">
+                    <img src="@ViewBag.imageLocation/@Html.DisplayFor(model => model.ImageName)" style="width: 100px; height: 100px;" />&nbsp;&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px; text-align:center;">
+                    <b>@Html.DisplayTextFor(x => x.Brand)</b>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px; text-align:center;">
+                    <input type="submit" value="Delete" class="btn btn-default" onclick="return ConfirmDelete();" />
+                    <input type="button" value="Cancel" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("Index", "Phones") + "'");" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}

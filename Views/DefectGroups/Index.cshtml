@@ -1,0 +1,43 @@
+﻿@model IEnumerable<EF_CRUD.Models.DefectGroup>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Defect Groups</h2>
+
+<p>
+    <button onclick="location.href='@Url.Action("Create", "DefectGroups")';return false;" class="btn btn-default">New Defect Group</button>
+</p>
+<table class="table">
+    <tr class="TableHeader">
+        <th style="width:25%; padding:2px">
+            @Html.DisplayNameFor(model => model.GroupName)
+        </th>
+        <th style="width:65%; padding:2px">
+            @Html.DisplayNameFor(model => model.Info)
+        </th>
+        <th style="width:10%; padding:2px"></th>
+    </tr>
+
+    @{ var i = 0; }
+    @foreach (var item in Model)
+    {
+        var classStyle = "AltRow";
+        if (i == 0) { classStyle = ""; i--; } else { i++; }
+        <tr class="@classStyle">
+            <td style="width:25%; padding:2px">
+                @Html.DisplayFor(modelItem => item.GroupName)
+            </td>
+            <td style="width:65%; padding:2px">
+                @Html.DisplayFor(modelItem => item.Info)
+            </td>
+            <td style="width:10%; padding:2px">
+                @Html.ActionLink("Edit", "Edit", new { id = item.DefectGroupId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.DefectGroupId })
+            </td>
+        </tr>
+    }
+
+</table>

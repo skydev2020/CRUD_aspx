@@ -1,0 +1,347 @@
+﻿@model IEnumerable<EF_CRUD.View_Models.vmOrderDetails>
+
+@{
+    ViewBag.Title = "Track Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    function toggleRow(rowId) {
+        var row = document.getElementById(rowId);
+        var icon = document.getElementById("icon_" + rowId);
+
+        if (row.style.display == "none") {
+            row.style.display = "";
+            icon.innerHTML = "<i class='fa fa-minus-square'>";
+
+        }
+        else {
+            row.style.display = "none";
+            icon.innerHTML = "<i class='fa fa-plus-square'>";
+        }
+    }
+
+    function UpdateStatus(selectList, orderId) {
+        var selectListValue = selectList.value
+        var url = "/Orders/Index?orderId=" + orderId + "&orderStatusId=" + selectListValue;
+        window.location.href = url;
+    }
+
+    function FilterStatus() {
+        document.getElementById("SearchOrders").submit();
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.btn-block').click(function () {
+
+
+            var url = $('#orderBtn').data('url');
+            $.get(url, function (data) {
+
+                $('#orderBtn').html(data);
+                $('#myModal').modal('show');
+            });
+        });
+    });
+</script>
+
+@using (Html.BeginForm("Index", "Orders", FormMethod.Post, new { id = "SearchOrders", enctype = "multipart/form-data" }))
+{
+    <table style="width:100%;">
+        <tr>
+            <td style="width:60%;"><h2>Track Orders</h2></td>
+            <td style="width:15%; text-align:left; vertical-align:bottom;">
+                <input type="text" id="Search" name="Search" class="form-control" placeholder="Search" value="@ViewBag.Search" />
+            </td>
+            <td style="width:15%; text-align:center; vertical-align:bottom;">
+                @Html.DropDownList("filterStatusId", null, "-- Filter Status --", htmlAttributes: new { @class = "form-control" })
+            </td>
+            <td style="width:10%;vertical-align:bottom;">
+                <button type="submit" name="btnSubmit" id="btnSubmit" value="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                <button type="submit" name="btnReset" id="btnReset" value="reset" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Orders")';return false;"><i class="fa fa-undo"></i></button>
+            </td>
+        </tr>
+    </table>
+}
+
+<table class="table">
+    <tr class="TableHeader">
+        <th></th>
+        <th style="text-align:center">
+            Status
+        </th>
+        <th>
+            Order Id
+        </th>
+        <th>
+            Phone
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PromoCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PromoName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentUserName)
+        </th>
+        <th>
+            USPS Tracking
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td style="height:150px; vertical-align:middle; text-align:center;" class="text-danger" colspan="13">
+                <b>No Records Found Matching Search Criteria</b>
+            </td>
+        </tr>
+    }
+
+    @{ var count = 0; }
+    @foreach (var item in Model)
+    {
+        if (count > 0) { count = 0; } else { count++; }
+        <tr @if (count == 0) { @Html.Raw("class='AltRow'") ; }>
+            <td><div id="icon_@item.OrderId" name="icon_@item.OrderId" style="cursor:pointer" onclick="toggleRow(@Html.DisplayFor(modelItem => item.OrderId))"><i class="fa fa-plus-square"></i></div></td>
+            <td>
+                @{
+                    var selectedStatus = "";
+                    if (item.OrderStatusId == 1) { selectedStatus = "green"; }
+                    if (item.OrderStatusId == 2) { selectedStatus = "yellow"; }
+                    if (item.OrderStatusId == 3) { selectedStatus = "red"; }
+                    if (item.OrderStatusId == 4) { selectedStatus = "lightgrey"; }
+                }
+                <select style="background-color:@selectedStatus" onchange="UpdateStatus(this, @item.OrderId)">
+                    <option>-- Status --</option>
+                    @foreach (var status in ViewBag.OrderStatus)
+                    {
+                        var optionColor = "";
+                        if (status.OrderStatusId == 1) { optionColor = "green"; }
+                        if (status.OrderStatusId == 2) { optionColor = "yellow"; }
+                        if (status.OrderStatusId == 3) { optionColor = "red"; }
+                        if (status.OrderStatusId == 4) { optionColor = "lightgrey"; }
+                        <option style="background-color:@optionColor" value="@status.OrderStatusId"
+                                @if (item.OrderStatusId == int.Parse(status.OrderStatusId.ToString())) { @Html.Raw(" selected") ; }>
+                            @status.StatusType
+                        </option>
+                    }
+                </select>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
+                <a style="color: blueviolet; border-bottom: initial; cursor: default;" id="orderBtn" @Html.Partial("OrderDetails")>@Html.DisplayFor(modelItem => item.Brand) @Html.DisplayFor(modelItem => item.Version)</a>
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @{
+                    if (item.PromoName != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.PromoCode);
+                    }
+                    else
+                    {
+                        @Html.Raw("---");
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.PromoName != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.PromoName);
+                    }
+                    else
+                    {
+                        @Html.Raw("---");
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.PromoName != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.Discount); @Html.Raw("%");
+                    }
+                    else
+                    {
+                        @Html.Raw("---");
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentUserName)
+            </td>
+            <td>
+                EJ958083578US
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td><input type="button" value="eBay" /></td>
+        </tr>
+        <tr @if (count == 0) { @Html.Raw("style='display:none;'")  ; } else { @Html.Raw("style='display:none;'") ; } id="@Html.DisplayFor(modelItem => item.OrderId)" name="@Html.DisplayFor(modelItem => item.OrderId)">
+            <td colspan="12">
+                <table>
+                    <tr>
+                        <td style="width:50px; padding:10px;"></td>
+                        <td style="padding:5px; font-weight:bold">
+                            Name:
+                        </td>
+                        <td style="padding:5px;">
+                            @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td style="width:15px;"></td>
+                        <td style="padding:5px; font-weight:bold">
+                            Address:
+                        </td>
+                        <td style="padding:5px;">
+                            @Html.DisplayFor(modelItem => item.Address) @Html.DisplayFor(modelItem => item.Address2) @Html.DisplayFor(modelItem => item.City), @Html.DisplayFor(modelItem => item.State) @Html.DisplayFor(modelItem => item.Zip)
+                        </td>
+                        <td style="width:15px;"></td>
+                        <td style="padding:5px; font-weight:bold">
+                            Phone:
+                        </td>
+                        <td style="padding:5px;">
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td style="width:15px;"></td>
+                        <td style="padding:5px; font-weight:bold">
+                            Email:
+                        </td>
+                        <td style="padding:5px;">
+                            <a href="mailto:@Html.DisplayFor(modelItem => item.Email)">@Html.DisplayFor(modelItem => item.Email)</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+
+
+<div id="orderModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Order details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-2">Phone:</div>
+                        <div class="col-sm-6">______</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2">Create Date:</div>
+                        <div class="col-sm-6">______</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-6">6</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("orderModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("orderBtn");
+
+    // Get the <span>
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span>
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

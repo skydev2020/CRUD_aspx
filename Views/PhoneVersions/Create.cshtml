@@ -1,0 +1,237 @@
+﻿@model EF_CRUD.Models.PhoneVersion
+
+@{
+    ViewBag.Title = "Create Phone Version";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    var valid = false;
+
+    function validate_fileupload(input_element) {
+        var el = document.getElementById("ValidationMessage");
+        var fileName = input_element.value;
+        var allowed_extensions = new Array("jpg", "JPG", "png", "PNG", "gif", "GIF");
+        var file_extension = fileName.split('.').pop();
+        for (var i = 0; i < allowed_extensions.length; i++) {
+            if (allowed_extensions[i] == file_extension) {
+                valid = true; // valid file extension
+                el.innerHTML = "";
+                return;
+            }
+        }
+        el.innerHTML = "Invalid file";
+        valid = false;
+    }
+
+    function ShowValue(storage) {
+        var div = document.getElementById("Div_" + storage);
+        var element = document.getElementById("Capacity_" + storage);
+
+        if (element.checked) {
+            div.style.display = "";
+        }
+        else {
+            div.style.display = "none";
+        }
+    }
+
+    function valid_form() {
+        var valid = true;
+
+        if (document.getElementById("Capacity_3").checked == false &&
+            document.getElementById("Capacity_4").checked == false &&
+            document.getElementById("Capacity_5").checked == false &&
+            document.getElementById("Capacity_7").checked == false &&
+            document.getElementById("Capacity_8").checked == false &&
+            document.getElementById("Capacity_11").checked == false) {
+            document.getElementById("CapacityValidationMessage").innerHTML = "Please Select Storage Capacity";
+            valid = false;
+        }
+        else {
+            document.getElementById("CapacityValidationMessage").innerHTML = "";
+        }
+
+        if (document.getElementById("Capacity_3").checked && document.getElementById("Value_3").value == "") {
+            document.getElementById("ValidationMessage_3").innerHTML = "Please Enter Value";
+            valid = false;
+        }
+        else {
+            document.getElementById("ValidationMessage_3").innerHTML = "";
+        }
+
+        if (document.getElementById("Capacity_4").checked && document.getElementById("Value_4").value == "") {
+            document.getElementById("ValidationMessage_4").innerHTML = "Please Enter Value";
+            valid = false;
+        }
+        else {
+            document.getElementById("ValidationMessage_4").innerHTML = "";
+        }
+
+        if (document.getElementById("Capacity_5").checked && document.getElementById("Value_5").value == "") {
+            document.getElementById("ValidationMessage_5").innerHTML = "Please Enter Value";
+            valid = false;
+        }
+        else {
+            document.getElementById("ValidationMessage_5").innerHTML = "";
+        }
+
+        if (document.getElementById("Capacity_7").checked && document.getElementById("Value_7").value == "") {
+            document.getElementById("ValidationMessage_7").innerHTML = "Please Enter Value";
+            valid = false;
+        }
+        else {
+            document.getElementById("ValidationMessage_7").innerHTML = "";
+        }
+
+        if (document.getElementById("Capacity_8").checked && document.getElementById("Value_8").value == "") {
+            document.getElementById("ValidationMessage_8").innerHTML = "Please Enter Value";
+            valid = false;
+        }
+        else {
+            document.getElementById("ValidationMessage_8").innerHTML = "";
+        }
+
+        if (document.getElementById("Capacity_11").checked && document.getElementById("Value_11").value == "") {
+            document.getElementById("ValidationMessage_11").innerHTML = "Please Enter Value";
+            valid = false;
+        }
+        else {
+            document.getElementById("ValidationMessage_11").innerHTML = "";
+        }
+
+        // Check For Image Upload
+        if (document.getElementById("ImageName").value != "") {
+            valid = true;
+        }
+        if (!valid) {
+            document.getElementById("ValidationMessage").innerHTML = "Please Select an Image";
+        }
+
+        // Custom "Forced" Validation For Carrier
+        if (document.getElementById("carrierId").value == "") {
+            document.getElementById("CarrierValidationMessage").innerHTML = "Please Select Carrier";
+            valid = false;
+        }
+        else {
+            document.getElementById("CarrierValidationMessage").innerHTML = "";
+            valid = true;;
+        }
+
+        // Custom "Forced" Validation For Carrier Value
+        if (document.getElementById("txtCarrierValue").value == "") {
+            document.getElementById("CarrierValueValidationMessage").innerHTML = "Please Enter Carrier Value";
+            valid = false;
+        }
+        else {
+            document.getElementById("CarrierValueValidationMessage").innerHTML = "";
+            valid = true;;
+        }
+        alert(document.getElementById("brandId").value);
+        // Custom "Forced" Validation For Brand
+        if (document.getElementById("brandId").value == "") {
+            document.getElementById("BrandValidationMessage").innerHTML = "Please Select Brand";
+            valid = false;
+        }
+        else {
+            document.getElementById("BrandValidationMessage").innerHTML = "";
+            valid = true;;
+        }
+
+        // Custom "Forced" Validation For Storage Capacity
+        if (document.getElementById("storageCapacityId").value == "") {
+            document.getElementById("CapacityValidationMessage").innerHTML = "Please Select Storage Capacity";
+            valid = false;
+        }
+        else {
+            document.getElementById("CapacityValidationMessage").innerHTML = "";
+            valid = true;;
+        }
+
+        return valid;
+    }
+</script>
+
+<h2>Create Phone Version</h2>
+
+<div style="height:20px;"></div>
+<div style="width:600px; margin-right:auto; margin-left:auto;" class="text-danger">@ViewBag.Message</div>
+
+@using (Html.BeginForm("Create", "PhoneVersions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone.Brand, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("brandId", new SelectList(ViewBag.PhoneBrands, "PhoneId", "Brand", @ViewBag.BrandId), "-- Select One --", new { required = "required", onchange = "valid_form()", @class = "form-control" })
+                <div id="BrandValidationMessage" class="text-danger"></div>
+            </div>
+        </div>
+
+        @foreach (var item in ViewBag.Carriers)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2">@Html.Raw(item.CarrierName + " Value")</label>
+                <div class="col-md-10">
+                    <input type="text" id="Carrier_@item.CarrierId" name="Carrier_@item.CarrierId" class="form-control" value="0" />
+                    <div id="CarrierValidationMessage_@item.CarrierId" class="text-danger"></div>
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Version, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Version, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Version, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StorageCapacity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var item in ViewBag.StorageCapacities)
+                {
+                    <input type="checkbox" id="Capacity_@item.StorageCapacityId" name="Capacity_@item.StorageCapacityId" value="@item.StorageCapacityId" onclick="ShowValue(@item.StorageCapacityId)" />
+                    @item.Description @Html.Raw("&nbsp;&nbsp;")
+                }
+                <div id="CapacityValidationMessage" class="text-danger"></div>
+            </div>
+        </div>
+
+        @foreach (var item in ViewBag.StorageCapacities)
+        {
+            <div class="form-group" id="Div_@item.StorageCapacityId" style="display:none;">
+                <div class="control-label col-md-2"><b>@item.Description Value</b></div>
+                <div class="col-md-10">
+                    <input type="text" id="Value_@item.StorageCapacityId" name="Value_@item.StorageCapacityId" class="form-control" value="0" />
+                    <div id="ValidationMessage_@item.StorageCapacityId" class="text-danger"></div>
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="imageFile" id="imageFile" accept=".jpg,.png,.bmp" onchange="validate_fileupload(this);" />
+                @Html.HiddenFor(model => model.ImageName)
+                <div id="ValidationMessage" class="text-danger"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" onclick="return valid_form()" />
+                <input type="button" value="Cancel" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("Index", "PhoneVersions") + "'");" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

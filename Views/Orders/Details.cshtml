@@ -1,0 +1,74 @@
+﻿@model EF_CRUD.Models.Order
+
+@{
+    ViewBag.Title = "Order Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Order Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderStatu.StatusType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderStatu.StatusType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentType.PaymentType1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentType.PaymentType1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Promo.PromoCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Promo.PromoCode)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

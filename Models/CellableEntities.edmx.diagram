@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f79e7cbab9814858a8884bb7421f08ff" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="CellableModel.Carrier" Width="1.5" PointX="2.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.Order" Width="1.5" PointX="9.375" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.OrderStatu" Width="1.5" PointX="11.875" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.Permission" Width="1.5" PointX="11.875" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.Phone" Width="1.5" PointX="2.875" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.PhoneVersion" Width="1.5" PointX="0.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.PossibleDefect" Width="1.5" PointX="4.875" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.State" Width="1.5" PointX="12.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.StorageCapacity" Width="1.5" PointX="2.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.sysdiagram" Width="1.5" PointX="6.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.User" Width="1.5" PointX="9.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.UserAnswer" Width="1.5" PointX="7.125" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CellableModel.UserPhone" Width="1.5" PointX="4.875" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="CellableModel.FK_171" ManuallyRouted="false" />
+        <AssociationConnector Association="CellableModel.FK_106" ManuallyRouted="false" />
+        <AssociationConnector Association="CellableModel.FK_151" ManuallyRouted="false" />
+        <AssociationConnector Association="CellableModel.FK_178" ManuallyRouted="false" />
+        <AssociationConnector Association="CellableModel.FK_190" ManuallyRouted="false" />
+        <AssociationConnector Association="CellableModel.FK_125" ManuallyRouted="false" />
+        <AssociationConnector ManuallyRouted="false" Association="CellableModel.FK_174" />
+        <AssociationConnector Association="CellableModel.FK_110" ManuallyRouted="false" />
+        <AssociationConnector ManuallyRouted="false" Association="CellableModel.FK_175" />
+        <AssociationConnector Association="CellableModel.FK_137" ManuallyRouted="false" />
+        <AssociationConnector Association="CellableModel.FK__PhoneVers__Phone__5070F446" />
+        <AssociationConnector Association="CellableModel.FK__PhoneVers__Stora__5165187F" />
+        <EntityTypeShape EntityType="CellableModel.PaymentType" Width="1.5" PointX="11.875" PointY="7.875" />
+        <AssociationConnector Association="CellableModel.FK_Orders_PaymentTypes" />
+        <EntityTypeShape EntityType="CellableModel.Promo" Width="1.5" PointX="9.375" PointY="10" />
+        <AssociationConnector Association="CellableModel.FK_Orders_Promos" />
+        <EntityTypeShape EntityType="CellableModel.DefectGroup" Width="1.5" PointX="4.5" PointY="8.875" />
+        <AssociationConnector Association="CellableModel.FK_PossibleDefects_DefectGroup" />
+        <EntityTypeShape EntityType="CellableModel.VersionCapacity" Width="1.5" PointX="4.625" PointY="11.625" />
+        <AssociationConnector Association="CellableModel.FK_VersionCapacity_PhoneVersion" />
+        <AssociationConnector Association="CellableModel.FK_VersionCapacity_StorageCapacity" />
+        <EntityTypeShape EntityType="CellableModel.SystemSetting" Width="1.5" PointX="13.75" PointY="3.125" />
+        <EntityTypeShape EntityType="CellableModel.SlideShow" Width="1.5" PointX="11.75" PointY="10.75" />
+        <EntityTypeShape EntityType="CellableModel.Testimonial" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="CellableModel.VersionCarrier" Width="1.5" PointX="2.625" PointY="3.75" />
+        <AssociationConnector Association="CellableModel.FK_VersionCarrier_Carrier" />
+        <AssociationConnector Association="CellableModel.FK_VersionCarrier_PhoneVersion" />
+        <EntityTypeShape EntityType="CellableModel.DefectTemplate" Width="1.5" PointX="6.875" PointY="11" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

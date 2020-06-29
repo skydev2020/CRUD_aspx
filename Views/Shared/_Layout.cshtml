@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Cellable Admin</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style>
+    </style>
+</head>
+
+<body>
+    <table style="position:fixed; top:0; width:100%; height:100%">
+        <tr>
+            <td colspan="2" style="background-color:#2D5A7F; height:80px;">
+                <table style="width:100%">
+                    <tr style="vertical-align:bottom">
+                        <td style="width:15%" class="Header"><h2>Cellable Admin</h2></td>
+                        <td style="width:5%; text-align:left">@Html.ActionLink("Brands", "Index", "Phones", new { }, new { @class = "NavLink" })</td>
+                        <td style="width:7%; text-align:left">@Html.ActionLink("Phone Versions", "Index", "PhoneVersions", new { }, new { @class = "NavLink" })</td>
+                        <td style="width:7%; text-align:left">@Html.ActionLink("Defect Groups", "Index", "DefectGroups", new { }, new { @class = "NavLink" })</td>
+                        <td style="width:7%; text-align:left">@Html.ActionLink("Possible Defects", "Index", "PossibleDefects", new { }, new { @class = "NavLink" })</td>
+                        <td style="width:7%; text-align:left">@Html.ActionLink("Defect Template", "Index", "DefectTemplate", new { }, new { @class = "NavLink" })</td>
+                        <td style="width:7%; text-align:left">@Html.ActionLink("Storage Capacities", "Index", "StorageCapacities", new { }, new { @class = "NavLink" })</td>
+                        <td style="width:4%; text-align:left">@Html.ActionLink("Carriers", "Index", "Carriers", new { }, new { @class = "NavLink" })</td>
+                        <td style="width:7%; text-align:left">@Html.ActionLink("Payment Types", "Index", "PaymentTypes", new { }, new { @class = "NavLink" })</td>
+                        <td style="width:12%; text-align:left">@Html.ActionLink("Promos", "Index", "Promo", new { }, new { @class = "NavLink" })</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color:#366C98; width:150px; height:100%; text-align:right; padding:15px; vertical-align:top">
+                <div style="vertical-align:top; height:90%">
+                    @Html.ActionLink("Dashboard", "Dashboard", "Users", new { }, new { @class = "NavLink" }) &nbsp;<i style="color:#D1E5F2" class="fas fa-tachometer-alt"></i><br>
+                    @Html.ActionLink("Orders", "Index", "Orders", new { }, new { @class = "NavLink" }) &nbsp;<i style="color:#D1E5F2" class="fas fa-comment-dollar"></i><br>
+                    @Html.ActionLink("Users", "Index", "Users", new { }, new { @class = "NavLink" }) &nbsp;<i style="color:#D1E5F2" class="fas fa-users-cog"></i><br>
+                    @Html.ActionLink("Testimonials", "Index", "Testimonials", new { }, new { @class = "NavLink" }) &nbsp;<i style="color:#D1E5F2" class="fas fa-hand-paper"></i><br>
+                    @Html.ActionLink("Settings", "Index", "SystemSettings", new { }, new { @class = "NavLink" }) &nbsp;<i style="color:#D1E5F2" class="fas fa-cog"></i><br>
+                    @Html.ActionLink("Logout", "LogOut", "Authentication", new { }, new { @class = "NavLink" })  &nbsp;<i style="color:#D1E5F2" class="fas fa-sign-out-alt"></i>
+                </div>
+                <div style="height:10%"></div>
+                <div style="vertical-align:bottom;">
+                    <div style="font-size:x-small;text-align:center" class="Footer">&copy; @DateTime.Now.Year - Cellable Admin</div>
+                </div>
+            </td>
+            <td style="padding:20px; height:100%; vertical-align:top; overflow:auto; background-color:#E8F1F9; border-left:solid; border-width:10px; border-color: #2D5A7F">
+                <div style="overflow-y: scroll; height:100%;">@RenderBody()</div>
+            </td>
+        </tr>
+    </table>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/daccc548e2.js")
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        var submit = false;
+
+        function ConfirmDelete() {
+            if (confirm("Are you sure you want to delete this item?\nThis action cannot be undone.")) {
+                submit = true;
+            }
+            return submit;
+        }
+    </script>
+</body>
+</html>

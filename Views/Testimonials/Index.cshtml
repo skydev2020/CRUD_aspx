@@ -1,0 +1,67 @@
+﻿@model IEnumerable<EF_CRUD.Models.Testimonial>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+
+<h2>Testimonials</h2>
+
+<table class="table">
+    <tr class="TableHeader">
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @{ var x = 0; }
+    @foreach (var item in Model)
+    {
+        var classStyle = "AltRow";
+        if (x == 0) { classStyle = ""; x--; } else { x++; }
+        <tr class="@classStyle">
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @for (var i = 1; i <= item.Rating; i++)
+                {
+                    @Html.Raw("<span class='fa fa-star'></span>");
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.TestimonialId }) |
+                @if (item.Published == true)
+                {
+                    @Html.ActionLink("Remove", "Publish", new { id = item.TestimonialId })
+                }
+                else
+                {
+                    @Html.ActionLink("Publish", "Publish", new { id = item.TestimonialId })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

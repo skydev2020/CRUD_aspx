@@ -1,0 +1,252 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .rcorners {
+        border-radius: 25px;
+        border: 2px solid #366C98;
+        padding: 20px;
+        width: 200px;
+        height: 150px;
+    }
+
+    #outerDivWrapper, #outerDiv {
+        height: 420px;
+        margin: 0em;
+    }
+
+    #scrollableContent {
+        height: 420px;
+        margin: 0em;
+        overflow-y: auto;
+    }
+
+    #outerSmallDivWrapper, #outerSmallDiv {
+        height: 160px;
+        margin: 0em;
+    }
+
+    #scrollableSmallContent {
+        height: 160px;
+        margin: 0em;
+        overflow-y: auto;
+    }
+
+    #outerXSmallDivWrapper, #outerSmallDiv {
+        height: 100px;
+        margin: 0em;
+    }
+
+    #scrollableXSmallContent {
+        height: 100px;
+        margin: 0em;
+        overflow-y: auto;
+    }
+</style>
+
+<h2>Admin Dashboard</h2>
+
+Logged In As: @User.Identity.Name
+
+
+<table style="width:60%; margin-right:auto; margin-left:auto;">
+    <tr>
+        <td style="width:45%; height:40px; padding:10px; background-color:#2D5A7F;" class="NavLink">
+            Promotions
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table style="width:100%;" class="rcorners">
+                <tr style="background-color:#366C98;" class="NavLink">
+                    <td style="width:10%; padding:5px;">Code</td>
+                    <td style="width:15%; padding:5px;">Name</td>
+                    <td style="width:30%; padding:5px;">Start Date</td>
+                    <td style="width:20%; padding:5px;">End Date</td>
+                    <td style="width:10%; padding:5px;">Amount</td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <div id="outerXSmallDivWrapper">
+                            <div id="outerXSmallDiv">
+                                <div id="scrollableXSmallContent">
+                                    <table style="width:100%;">
+                                        @{ var count = 0; }
+                                        @foreach (var item in ViewBag.Promotions)
+                                        {
+                                            if (count > 0) { count = 0; } else { count++; }
+                                            <tr @if (count == 0) { @Html.Raw("class='AltRow'") ; }>
+                                                <td>
+                                                    @item.PromoCode
+                                                </td>
+                                                <td>
+                                                    @item.PromoName
+                                                </td>
+                                                <td>
+                                                    @item.StartDate
+                                                </td>
+                                                <td>
+                                                    @item.EndDate
+                                                </td>
+                                                <td>
+                                                    @if (item.Discount != 0)
+                                                    {
+                                                        @item.Discount@Html.Raw("%")
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.Raw("$")@Html.Raw(decimal.Round(decimal.Parse(@item.DollarValue.ToString()), 2));
+                                      }
+                                                    </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<p></p>
+
+<table style="width:60%; margin-right:auto; margin-left:auto;">
+    <tr>
+        <td style="width:45%; vertical-align:top;" rowspan="2">
+            <table style="width:100%;" class="rcorners">
+                <tr>
+                    <td colspan="3" style="width:45%; height:40px; padding:10px; background-color:#2D5A7F;" class="NavLink">New Orders <div style="width:80px; display:inline-block;">(@ViewBag.OrderCount)</div></td>
+                </tr>
+                <tr style="background-color:#366C98;" class="NavLink">
+                    <td style="padding:5px;">Amount</td>
+                    <td style="padding:5px;">Create Date</td>
+                    <td style="padding:5px;">Payment Method</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div id="outerDivWrapper">
+                            <div id="outerDiv">
+                                <div id="scrollableContent">
+                                    <table style="width:100%;">
+                                        @{ count = 0; }
+                                        @foreach (var item in ViewBag.NewOrders)
+                                        {
+                                            if (count > 0) { count = 0; } else { count++; }
+                                            <tr @if (count == 0) { @Html.Raw("class='AltRow'") ; }>
+                                                <td style="width:30%;">
+                                                    $@decimal.Truncate(decimal.Parse(item.Amount.ToString()))
+                                                </td>
+                                                <td style="width:45%;">
+                                                    @item.CreateDate
+                                                </td>
+                                                <td style="text-align:left;">
+                                                    @foreach (var pt in ViewBag.PaymentTypes)
+                                                    {
+                                                        if (pt.PaymentTypeId == item.PaymentTypeId)
+                                                        {
+                                                            @pt.PaymentType1
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td style="width:5%;"></td>
+        <td style="width:45%; vertical-align:top;">
+            <table style="width:100%; vertical-align:top;">
+                <tr>
+                    <td>
+                        <table style="width:100%;" class="rcorners">
+                            <tr>
+                                <td colspan="2" style="width:100%; height:40px; padding:10px; background-color:#2D5A7F;" class="NavLink">Top 10 Most Viewed Versions</td>
+                            </tr>
+                            <tr style="background-color:#366C98;" class="NavLink">
+                                <td style="padding:5px;width:50%;">Version</td>
+                                <td style="padding:5px;width:50%;">&nbsp;&nbsp;Views</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div id="outerSmallDivWrapper">
+                                        <div id="outerSmallDiv">
+                                            <div id="scrollableSmallContent">
+                                                <table style="width:100%;">
+                                                    @{ count = 0; }
+                                                    @foreach (var item in ViewBag.MostViewed)
+                                                    {
+                                                        if (count > 0) { count = 0; } else { count++; }
+                                                        <tr @if (count == 0) { @Html.Raw("class='AltRow'") ; }>
+                                                            <td style="width:50%;">
+                                                                @item.Version
+                                                            </td>
+                                                            <td style="width:50%;">
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@item.Views
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table style="height:10px;"><tr><td></td></tr></table>
+            <table style="width:100%; vertical-align:top;">
+                <tr>
+                    <td>
+                        <table style="width:100%;" class="rcorners">
+                            <tr>
+                                <td colspan="2" style="width:100%; height:40px; padding:10px; background-color:#2D5A7F;" class="NavLink">Top 10 Most Purchased Versions</td>
+                            </tr>
+                            <tr style="background-color:#366C98;" class="NavLink">
+                                <td style="padding:5px;width:50%;">Version</td>
+                                <td style="padding:5px;width:50%;">Sales</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div id="outerSmallDivWrapper">
+                                        <div id="outerSmallDiv">
+                                            <div id="scrollableSmallContent">
+                                                <table style="width:100%;">
+                                                    @{ count = 0; }
+                                                    @foreach (var item in ViewBag.MostPurchased)
+                                                    {
+                                                        if (count > 0) { count = 0; } else { count++; }
+                                                        <tr @if (count == 0) { @Html.Raw("class='AltRow'") ; }>
+                                                            <td style="width:50%;">
+                                                                @item.Version
+                                                            </td>
+                                                            <td style="width:50%;">
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;@item.Purchases
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

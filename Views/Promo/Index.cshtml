@@ -1,0 +1,93 @@
+﻿@model IEnumerable<EF_CRUD.Models.Promo>
+
+@{
+    ViewBag.Title = "Promos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Promotions</h2>
+
+<p>
+    <button onclick="location.href='@Url.Action("Create", "Promo")';return false;" class="btn btn-default">New Promotion</button>
+</p>
+<table class="table">
+    <tr class="TableHeader">
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.PromoCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PromoName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            Percentage
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DollarValue)
+        </th>
+        <th></th>
+    </tr>
+
+    @{ var statusColor = ""; }
+    @{ var i = 0; }
+    @foreach (var item in Model)
+    {
+        var classStyle = "AltRow";
+        var now = DateTime.Now;
+        var endDate = DateTime.Now;
+        var fiveDaysOut = now.AddDays(5);
+        if (i == 0) { classStyle = ""; i--; } else { i++; }
+        if (item.EndDate < now)
+        {
+            statusColor = "palevioletred";
+        }
+        else if (item.EndDate > now && item.EndDate > fiveDaysOut)
+        {
+            statusColor = "palegreen";
+        }
+        if (item.EndDate > now && item.EndDate < fiveDaysOut)
+        {
+            statusColor = "palegoldenrod";
+        }
+        <tr class="@classStyle">
+            <td style="background-color:@statusColor; cursor:pointer">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PromoCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PromoName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @if (item.Discount != 0)
+                {
+                    @Html.DisplayFor(modelItem => item.Discount) @Html.Raw("%")
+                }
+
+            </td>
+            <td>
+                @if (item.DollarValue != null)
+                {
+                    @Html.Raw("$")@Html.DisplayFor(modelItem => item.DollarValue);
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PromoId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PromoId })
+            </td>
+        </tr>
+    }
+
+</table>

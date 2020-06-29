@@ -1,0 +1,42 @@
+﻿@model EF_CRUD.Models.PhoneVersion
+
+@{
+    ViewBag.Title = "Details Phone Version";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details Phone Version</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Version)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Version)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaseCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaseCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VersionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

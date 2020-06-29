@@ -1,0 +1,56 @@
+﻿@model EF_CRUD.Models.DefectTemplate
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Defect Template Item</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div style="height:20px;"></div>
+    <table style="width:100%; margin-left:auto; margin-right:auto;">
+        <tr>
+            <td style="padding:5px; text-align:right;">
+                <b>Defect Group</b>
+            </td>
+            <td style="padding:5px;">
+                @Html.DropDownList("DefectGroupId", null, "-- Select Group --", htmlAttributes: new { @class = "form-control", onchange = "valid_form()" })
+                <div id="StateValidationMessage" class="text-danger"></div>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px; text-align:right; vertical-align:top;">
+                <b>Defect Name</b>
+            </td>
+            <td style="padding:5px;">
+                @Html.TextAreaFor(model => model.DefectName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DefectName, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px; text-align:right;">
+                <b>Defect Cost</b>
+            </td>
+            <td style="padding:5px;">
+                @Html.EditorFor(model => model.DefectCost, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DefectCost, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px;"></td>
+            <td style="padding:5px;">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="button" value="Cancel" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("Index", "DefectTemplate") + "'");" />
+            </td>
+        </tr>
+    </table>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<EF_CRUD.Models.StorageCapacity>
+
+@{
+    ViewBag.Title = "Storage Capacities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <button onclick="location.href='@Url.Action("Create", "StorageCapacities")';return false;" class="btn btn-default">New Storage Capacity</button>
+</p>
+<table class="table" style="width:100%;">
+    <tr class="TableHeader">
+        <th>
+            @Html.DisplayNameFor(model => model.StorageCapacity1)
+        </th>
+        <th></th>
+    </tr>
+    </table>
+<table class="table" style="width:100%;">
+    @{ var i = 0; }
+
+    @foreach (var item in Model)
+    {
+        var classStyle = "AltRow";
+        if (i == 0) { classStyle = ""; i--; } else { i++; }
+        <tr class="@classStyle">
+            <td style="text-align:center; width:65%; font-weight:bold;">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td style="width:35%;">
+                @Html.ActionLink("Edit", "Edit", new { id = item.StorageCapacityId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.StorageCapacityId })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,68 @@
+﻿@model EF_CRUD.Models.Promo
+
+@{
+    ViewBag.Title = "Delete Promotion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete Promotion</h2>
+
+<h3>Are you sure you want to delete this Promotion?</h3>
+
+<div style="height:20px;"></div>
+<div style="width:600px; margin-right:auto; margin-left:auto;" class="text-danger">@ViewBag.Message</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<table style="width:60%; margin-left:100px; margin-right:auto;">
+    <tr>
+        <td style="padding:8px; text-align:right; width:20%">
+            @Html.LabelFor(model => model.PromoCode)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.PromoCode)
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:8px; text-align:right; width:20%">
+            @Html.LabelFor(model => model.PromoName)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.PromoName)
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:8px; text-align:right; width:20%">
+            @Html.LabelFor(model => model.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.StartDate)
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:8px; text-align:right; width:20%">
+            @Html.LabelFor(model => model.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.EndDate)
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:8px; text-align:right; width:20%">
+            @Html.LabelFor(model => model.Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Discount)%
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <input type="submit" value="Delete" class="btn btn-default" onclick="return ConfirmDelete();" />
+            <input type="button" value="Cancel" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("Index", "Promo") + "'");" />
+        </td>
+    </tr>
+</table>
+}

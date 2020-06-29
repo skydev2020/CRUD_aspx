@@ -1,0 +1,79 @@
+﻿@model EF_CRUD.Models.PossibleDefect
+
+@{
+    ViewBag.Title = "Create Possible Defect";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function valid_form() {
+        // Custom "Forced" Validation For State
+        //if (document.getElementById("State").value == "") {
+        //    document.getElementById("StateValidationMessage").innerHTML = "Please Select State";
+        //    valid = false;
+        //}
+        //else {
+        //    document.getElementById("StateValidationMessage").innerHTML = "";
+        //    valid = true;
+        //}
+
+        //return valid;
+    }
+</script>
+<h2>Create Possible Defect</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div style="height:20px;"></div>
+    <table style="width:100%; margin-left:auto; margin-right:auto;">
+        <tr>
+            <td style="padding:5px; text-align:right;">
+                <b>Defect Group</b>
+            </td>
+            <td style="padding:5px;">
+                @Html.DropDownList("DefectGroup", null, "-- Select Group --", htmlAttributes: new { @class = "form-control", onchange = "valid_form()" })
+                <div id="StateValidationMessage" class="text-danger"></div>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px; text-align:right;">
+                <b>Defect Name</b>
+            </td>
+            <td style="padding:5px;">
+                @Html.TextAreaFor(model => model.DefectName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DefectName, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px; text-align:right;">
+                <b>Defect Cost</b>
+            </td>
+            <td style="padding:5px;">
+                @Html.EditorFor(model => model.DefectCost, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DefectCost, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px; text-align:right;">
+                <b>Version</b>
+            </td>
+            <td style="padding:5px;">
+                @Html.DropDownList("VersionId", null, "-- Select Version --", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.VersionId, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px;"></td>
+            <td style="padding:5px;">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="button" value="Cancel" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("Index", "PossibleDefects") + "'");" />
+            </td>
+        </tr>
+    </table>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

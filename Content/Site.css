@@ -1,0 +1,123 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 200px;
+}
+
+/* Navigation */
+.NavLink {
+    text-decoration: none;
+    color: #D1E5F2;
+    font-size: medium;
+}
+
+    .NavLink:hover {
+        color: #E8F2F9;
+    }
+
+.Header {
+    color: #D1E5F2;
+}
+
+.Footer {
+    color: #D1E5F2;
+}
+
+.field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+}
+
+.container {
+    padding-top: 50px;
+    margin: auto;
+}
+
+/* Search Attributes */
+.search {
+    position: relative;
+    color: #aaa;
+    font-size: 16px;
+}
+
+    .search input {
+        width: 250px;
+        height: 32px;
+        background: #fcfcfc;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+        box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+    }
+
+    .search input {
+        text-indent: 32px;
+    }
+
+    .search .fa-search {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+/* Table Header Color */
+.TableHeader {
+    background-color: #366C98;
+    color: #D1E5F2
+}
+
+/* Alternate Row Color */
+.AltRow {
+    background-color: #CADDF2;
+}
+
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+}
+
+    /* style glyph */
+    .inner-addon .glyphicon {
+        position: absolute;
+        padding: 10px;
+        pointer-events: none;
+    }
+
+/* align glyph */
+.left-addon .glyphicon {
+    left: 0px;
+}
+
+.right-addon .glyphicon {
+    right: 0px;
+}
+
+/* add padding  */
+.left-addon input {
+    padding-left: 30px;
+}
+
+.right-addon input {
+    padding-right: 30px;
+}

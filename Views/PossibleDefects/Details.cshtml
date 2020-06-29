@@ -1,0 +1,42 @@
+﻿@model EF_CRUD.Models.PossibleDefect
+
+@{
+    ViewBag.Title = "Possible Defect Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Possible Defect Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DefectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DefectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DefectCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DefectCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneVersion.Version)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneVersion.Version)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PossibleDefectId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,58 @@
+﻿@model EF_CRUD.Models.DefectTemplate
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete Defect Template Item</h2>
+
+<h3>Are you sure you want to delete this Defect Item?</h3>
+
+<div style="height:20px;"></div>
+<div style="width:600px; margin-right:auto; margin-left:auto;" class="text-danger">@ViewBag.Message</div>
+
+@using (Html.BeginForm("Delete", "DefectTemplate", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <table style="width:100%; margin-left:auto; margin-right:auto;">
+        <tr>
+            <td style="padding:5px; text-align:right;">
+                <b>Defect Group</b>
+            </td>
+            <td style="padding:5px;">
+                @foreach (var gn in ViewBag.GroupNames)
+                {
+                    if (gn.DefectGroupId == Model.DefectGroupId)
+                    {
+                        @gn.GroupName
+                    }
+                }
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px; text-align:right;">
+                <b>Defect Name</b>
+            </td>
+            <td style="padding:5px;">
+                @Html.DisplayTextFor(x => x.DefectName)
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px; text-align:right;">
+                <b>Defect Cost</b>
+            </td>
+            <td style="padding:5px;">
+                @Html.DisplayTextFor(x => x.DefectCost)
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px;"></td>
+            <td style="padding:5px;">
+                <input type="submit" value="Delete" class="btn btn-default" onclick="return ConfirmDelete();" />
+                <input type="button" value="Cancel" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("Index", "DefectTemplate") + "'");" />
+            </td>
+        </tr>
+    </table>
+}

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EF_CRUD.Models.Phone>
+
+@{
+    ViewBag.Title = "Brands";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <button onclick="location.href='@Url.Action("Create", "Phones")';return false;" class="btn btn-default">New Brand</button>
+</p>
+<table class="table" style="width:100%; margin-right:auto; margin-left:auto;">
+    <tr class="TableHeader">
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+</table>
+
+<table style="width:100%;">
+
+@{ var i = 0; }
+@foreach (var item in Model)
+{
+    var classStyle = "AltRow";
+    if (i == 0) { classStyle = ""; i--; } else { i++; }
+    <tr class="@classStyle">
+        <td style="width:30%; vertical-align:middle; text-align:right">
+            <img src="@ViewBag.imageLocation/@item.ImageName" style="width: 100px; height: 100px; left: 200px;" />
+        </td>
+        <td style="width:40%; vertical-align:middle; text-align:center; font-weight:bold;">
+            @Html.DisplayFor(modelItem => item.Brand)
+        </td>
+        <td style="width:30%; text-align:center; vertical-align:middle;">
+            @Html.ActionLink("Edit", "Edit", new { id = item.PhoneId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.PhoneId })
+        </td>
+    </tr>
+}
+
+</table>

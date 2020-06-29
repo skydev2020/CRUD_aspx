@@ -1,0 +1,23 @@
+﻿DefectName,DefectCost,VersionID
+Screen cracked or broken,10.00,1
+Heavy scratches,5.00,1
+1-2 Scratches,2.00,1
+Major Scratches,5.00,1
+Less than two scratches,2.00,1
+Major body dents,5.00,1
+Less than two body dents,2.00,1
+Cracked broken panel,10.00,1
+missing side panel,1.00,1
+Bent curved panel,8.00,1
+loose screen,6.00,1
+Does the phone have a clean IMEI/ESN?,8.00,1
+Power button not working,15.00,1
+Face sensor not working,7.00,1
+Face sensor not working,3.00,2
+Charging port faulty,2.00,1
+Charging port faulty,5.00,2
+Finger touch faulty,8.00,1
+Finger touch faulty,9.00,2
+Has your phone been disconnected,1.00,1
+Has your phone been disconnected,1.00,2
+Heavy spots,8.00,1

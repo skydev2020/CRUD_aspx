@@ -1,0 +1,68 @@
+﻿@model IEnumerable<EF_CRUD.Models.PossibleDefect>
+
+@{
+    ViewBag.Title = "Possible Defects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Index", "PossibleDefects", FormMethod.Post, new { enctype = "multipart/form-data", id = "Search", name = "Search" }))
+{
+    <table style="width:100%;">
+        <tr>
+            <td style="width:80%;">
+                <button onclick="location.href='@Url.Action("Create", "PossibleDefects")';return false;" class="btn btn-default">New Defect</button>
+            </td>
+            <td style="text-align:right; width:10%;">
+
+                @Html.DropDownList("VersionId", null, "-- Filter Version --", htmlAttributes: new { @class = "form-control" })
+            </td>
+            <td style="text-align:left; width:10%;">
+                &nbsp;<button type="submit" name="submit" id="submit" value="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </td>
+        </tr>
+    </table>
+}
+<table class="table">
+    <tr class="TableHeader">
+        <th>
+            @Html.DisplayNameFor(model => model.DefectGroup)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DefectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DefectCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneVersion.Version)
+        </th>
+        <th></th>
+    </tr>
+
+    @{ var i = 0; }
+    @foreach (var item in Model)
+    {
+        var classStyle = "AltRow";
+        if (i == 0) { classStyle = ""; i--; } else { i++; }
+        <tr class="@classStyle">
+            <td>
+                @Html.DisplayFor(modelItem => item.DefectGroup.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefectCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneVersion.Version)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PossibleDefectId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PossibleDefectId })
+            </td>
+        </tr>
+    }
+
+</table>

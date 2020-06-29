@@ -1,0 +1,108 @@
+﻿@model IEnumerable<EF_CRUD.Models.PhoneVersion>
+
+@{
+    ViewBag.Title = "Phone Versions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+</script>
+
+<h2>@ViewBag.Title</h2>
+
+<p />
+@using (Html.BeginForm("Index", "PhoneVersions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <table style="width:100%; margin-right:auto; margin-left:auto;">
+        <tr style="padding:2px">
+            <td style="width:45%; padding:2px">
+                <button onclick="location.href='@Url.Action("Create", "PhoneVersions")';return false;" class="btn btn-default">New Version</button>
+            </td>
+            <td style="width:35%; padding:2px; text-align:right;">
+                @{
+                    var active = "";
+                    var inactive = "";
+                    if (Request["active"] == "true" || Request["active"] == null)
+                    {
+                        active = "checked";
+                    }
+                    else
+                    {
+                        inactive = "checked";
+                    }
+
+                }
+                <input type="radio" id="true" name="active" value="true" @Html.Raw(active) />Active
+                &nbsp;
+                <input type="radio" id="false" name="active" value="false" @Html.Raw(inactive) />Inactive
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td style="width:10%; padding:2px">
+                <input type="text" id="searchString" name="searchString" class="form-control" placeholder="Search" value="@ViewBag.SearchString" />
+            </td>
+            <td style="width:10%; padding:2px">
+                <button type="submit" name="submit" id="submit" value="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                <button type="submit" name="submit" id="reset" value="reset" class="btn btn-default" onclick="location.href='@Url.Action("Index", "PhoneVersions")';return false;"><i class="fa fa-undo"></i></button>
+            </td>
+        </tr>
+    </table>
+}
+
+<table style="width:100%; margin-right:auto; margin-left:auto;">
+    <tr class="TableHeader">
+        <td style="height: 30px; vertical-align:middle; padding:5px;">
+            @Html.Label("Phone Versions")
+        </td>
+    </tr>
+</table>
+<table class="table" style="width:80%; margin-right:auto; margin-left:auto;">
+    @{
+        int cellCount = 0;
+        int cellLimit = 4;
+    }
+
+    @foreach (var item in Model)
+    {
+        if (cellCount != cellLimit)
+        {
+            cellCount++;
+        }
+        else
+        {
+            cellCount = 1;
+        }
+
+        if (cellCount == 1)
+        {
+            @Html.Raw("<tr>");
+        }
+
+        <td style="text-align:center; padding:6px">
+            <a href="@Url.Action("Edit", "PhoneVersions", new { id = item.VersionId } )">
+                <img src="@ViewBag.imageLocation/@item.ImageName" alt="@item.ImageName" style="height:250px; width:130px;" />
+            </a>
+            <br />
+            @Html.DisplayFor(modelItem => item.Phone.Brand)
+            <br />
+            @Html.DisplayFor(modelItem => item.Version)
+            <br />
+            @if (item.Active == true)
+            {
+                @Html.ActionLink("Mark Inactive", "ToggleActive", new { id = item.VersionId })
+            }
+            else
+            {
+                @Html.ActionLink("Mark Active", "ToggleActive", new { id = item.VersionId })
+            }
+        </td>
+
+        if (cellCount == cellLimit)
+        {
+            @Html.Raw("</tr>");
+        }
+    }
+    @if (Model.Count() == 0)
+    {
+        @Html.Raw("<div style='width:100%; text-align:center;' class='text-danger'>No Records Found</div>");
+    }
+</table>

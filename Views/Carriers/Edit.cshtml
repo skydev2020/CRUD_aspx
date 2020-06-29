@@ -1,0 +1,91 @@
+﻿@model EF_CRUD.View_Models.vmCarrier
+
+<script type="text/javascript">
+    var valid = false;
+
+    function validate_fileupload(input_element) {
+        var el = document.getElementById("ValidationMessage");
+        var fileName = input_element.value;
+        var allowed_extensions = new Array("jpg", "png", "gif");
+        var file_extension = fileName.split('.').pop();
+        for (var i = 0; i < allowed_extensions.length; i++) {
+            if (allowed_extensions[i] == file_extension) {
+                valid = true; // valid file extension
+                el.innerHTML = "";
+                return;
+            }
+        }
+        el.innerHTML = "Invalid file";
+        valid = false;
+    }
+
+    function valid_form() {
+        // Check For Image Upload
+        if (document.getElementById("ImageName").value != "") {
+            valid = true;
+        }
+        if (!valid) {
+            document.getElementById("ValidationMessage").innerHTML = "Please Select an Image";
+        }
+
+        return valid;
+    }
+</script>
+
+@{
+    ViewBag.Title = "Edit Carrier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Carrier</h2>
+
+<div style="height:20px;"></div>
+<div style="width:600px; margin-right:auto; margin-left:auto;" class="text-danger">@ViewBag.Message</div>
+
+@using (Html.BeginForm("Edit", "Carriers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CarrierId)
+
+        <div class="form-group">
+            <div class="col-md-10" style="margin-left:250px;">
+                @if (Model.ImageName != null)
+                {
+                    <img src="@ViewBag.imageLocation/@Html.DisplayFor(model => model.ImageName)" />@Html.Raw("&nbsp; &nbsp;")
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CarrierName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CarrierName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CarrierName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="imageFile" accept=".jpg,.png,.bmp" onchange="validate_fileupload(this);" />
+                @Html.HiddenFor(model => model.ImageName)
+                <div id="ValidationMessage" class="text-danger"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="button" value="Cancel" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("Index", "Carriers") + "'");" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
