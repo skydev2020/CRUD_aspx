@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EF_CRUD.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EF_CRUD.View_Models
@@ -56,5 +58,8 @@ namespace EF_CRUD.View_Models
 
         [Display(Name = "Create Date")]
         public DateTime CreateDate { get; set; }
+
+
+        public List<OrderQuestion> OrderQuestions { get; set; }
     }
 }

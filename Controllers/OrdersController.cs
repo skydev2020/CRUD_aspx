@@ -183,6 +183,10 @@ namespace EF_CRUD.Controllers
                     vmDetails.PaymentType = item.PaymentType;
                     vmDetails.PaymentUserName = item.PaymentUserName;
                     vmDetails.CreateDate = item.CreateDate;
+
+                    var OrderQuestions = db.OrderQuestions.Where(x => x.OrderId == item.OrderId).ToList();
+                    vmDetails.OrderQuestions = OrderQuestions;
+
                     orderDetailsVMlist.Add(vmDetails);
                 }
             }

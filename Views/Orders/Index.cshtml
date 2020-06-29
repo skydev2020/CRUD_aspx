@@ -239,6 +239,18 @@
                             <a href="mailto:@Html.DisplayFor(modelItem => item.Email)">@Html.DisplayFor(modelItem => item.Email)</a>
                         </td>
                     </tr>
+                    @foreach (var OrderQuestion in @item.OrderQuestions)
+                    {
+                    <tr>
+                        <td style="width:50px; padding:10px;"></td>
+                        <td style="padding:5px; font-weight:bold">
+                            @Html.DisplayFor(modelItem => OrderQuestion.Question)
+                        </td>
+                        <td style="padding:5px;">
+                            @Html.DisplayFor(modelItem => OrderQuestion.Answer)
+                        </td>
+                    </tr>
+                    }
                 </table>
             </td>
         </tr>
