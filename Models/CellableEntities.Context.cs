@@ -33,8 +33,7 @@ namespace EF_CRUD.Models
         public virtual DbSet<PhoneVersion> PhoneVersions { get; set; }
         public virtual DbSet<PossibleDefect> PossibleDefects { get; set; }
         public virtual DbSet<State> States { get; set; }
-        public virtual DbSet<StorageCapacity> StorageCapacities { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<StorageCapacity> StorageCapacities { get; set; }        
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAnswer> UserAnswers { get; set; }
         public virtual DbSet<UserPhone> UserPhones { get; set; }
@@ -47,5 +46,6 @@ namespace EF_CRUD.Models
         public virtual DbSet<Testimonial> Testimonials { get; set; }
         public virtual DbSet<VersionCarrier> VersionCarriers { get; set; }
         public virtual DbSet<DefectTemplate> DefectTemplates { get; set; }
+        public virtual DbSet<OrderQuestion> OrderQuestions { get; set; }
     }
 }

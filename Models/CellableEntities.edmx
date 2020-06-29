@@ -34,6 +34,15 @@
           <Property Name="DefectCost" Type="money" Nullable="false" />
           <Property Name="DefectGroupId" Type="int" />
         </EntityType>
+        <EntityType Name="OrderQuestions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" />
+          <Property Name="Question" Type="nvarchar" MaxLength="200" />
+          <Property Name="Answer" Type="nvarchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="OrderID" />
@@ -141,16 +150,6 @@
           <Property Name="StorageCapacity" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="10" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="SystemSettings">
           <Key>
             <PropertyRef Name="SettingId" />
@@ -199,6 +198,8 @@
           <Property Name="Answer" Type="bit" Nullable="false" />
           <Property Name="PossibleDefectId" Type="int" Nullable="false" />
           <Property Name="UserPhoneId" Type="int" Nullable="false" />
+          <Property Name="DefectGroupId" Type="int" />
+          <Property Name="UserAnswerId" Type="int" />
         </EntityType>
         <EntityType Name="UserPhone">
           <Key>
@@ -229,7 +230,7 @@
           <Property Name="CarrierId" Type="int" Nullable="false" />
           <Property Name="Value" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
-        <Association Name="FK__PhoneVers__Phone__5070F446">
+        <Association Name="FK__PhoneVers__Phone__6477ECF3">
           <End Role="Phones" Type="Self.Phones" Multiplicity="0..1" />
           <End Role="PhoneVersion" Type="Self.PhoneVersion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -361,6 +362,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Orders_OrderId">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="OrderQuestions" Type="Self.OrderQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderQuestions">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Orders_PaymentTypes">
           <End Role="PaymentTypes" Type="Self.PaymentTypes" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -449,6 +462,7 @@
           <EntitySet Name="Carrier" EntityType="Self.Carrier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DefectGroup" EntityType="Self.DefectGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DefectTemplate" EntityType="Self.DefectTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderQuestions" EntityType="Self.OrderQuestions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentTypes" EntityType="Self.PaymentTypes" Schema="dbo" store:Type="Tables" />
@@ -460,7 +474,6 @@
           <EntitySet Name="SlideShow" EntityType="Self.SlideShow" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StorageCapacity" EntityType="Self.StorageCapacity" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SystemSettings" EntityType="Self.SystemSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Testimonials" EntityType="Self.Testimonials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -468,7 +481,7 @@
           <EntitySet Name="UserPhone" EntityType="Self.UserPhone" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VersionCapacity" EntityType="Self.VersionCapacity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VersionCarrier" EntityType="Self.VersionCarrier" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__PhoneVers__Phone__5070F446" Association="Self.FK__PhoneVers__Phone__5070F446">
+          <AssociationSet Name="FK__PhoneVers__Phone__6477ECF3" Association="Self.FK__PhoneVers__Phone__6477ECF3">
             <End Role="Phones" EntitySet="Phones" />
             <End Role="PhoneVersion" EntitySet="PhoneVersion" />
           </AssociationSet>
@@ -511,6 +524,10 @@
           <AssociationSet Name="FK_190" Association="Self.FK_190">
             <End Role="Phones" EntitySet="Phones" />
             <End Role="UserPhone" EntitySet="UserPhone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_OrderId" Association="Self.FK_Orders_OrderId">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderQuestions" EntitySet="OrderQuestions" />
           </AssociationSet>
           <AssociationSet Name="FK_Orders_PaymentTypes" Association="Self.FK_Orders_PaymentTypes">
             <End Role="PaymentTypes" EntitySet="PaymentTypes" />
@@ -578,6 +595,7 @@
           <Property Name="PaymentUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="USPSTrackingId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MailingLabel" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderQuestions" Relationship="CellableModel.FK_Orders_OrderId" FromRole="Order" ToRole="OrderQuestion" />
         </EntityType>
         <EntityType Name="OrderStatu">
           <Key>
@@ -657,16 +675,6 @@
           <Property Name="Description" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="VersionCapacities" Relationship="CellableModel.FK_VersionCapacity_StorageCapacity" FromRole="StorageCapacity" ToRole="VersionCapacity" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -701,6 +709,8 @@
           <Property Name="UserPhoneId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PossibleDefect" Relationship="Self.FK_110" FromRole="UserAnswers" ToRole="PossibleDefects" />
           <NavigationProperty Name="UserPhone" Relationship="Self.FK_137" FromRole="UserAnswers" ToRole="UserPhone" />
+          <Property Name="DefectGroupId" Type="Int32" />
+          <Property Name="UserAnswerId" Type="Int32" />
         </EntityType>
         <EntityType Name="UserPhone">
           <Key>
@@ -847,8 +857,7 @@
           <EntitySet Name="PhoneVersions" EntityType="Self.PhoneVersion" />
           <EntitySet Name="PossibleDefects" EntityType="Self.PossibleDefect" />
           <EntitySet Name="States" EntityType="Self.State" />
-          <EntitySet Name="StorageCapacities" EntityType="Self.StorageCapacity" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="StorageCapacities" EntityType="Self.StorageCapacity" />          
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserAnswers" EntityType="Self.UserAnswer" />
           <EntitySet Name="UserPhones" EntityType="Self.UserPhone" />
@@ -937,6 +946,11 @@
             <End Role="VersionCarrier" EntitySet="VersionCarriers" />
           </AssociationSet>
           <EntitySet Name="DefectTemplates" EntityType="CellableModel.DefectTemplate" />
+          <EntitySet Name="OrderQuestions" EntityType="CellableModel.OrderQuestion" />
+          <AssociationSet Name="FK_Orders_OrderId" Association="CellableModel.FK_Orders_OrderId">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderQuestion" EntitySet="OrderQuestions" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__PhoneVers__Phone__5070F446">
           <End Type="CellableModel.Phone" Role="Phone" Multiplicity="0..1" />
@@ -1135,6 +1149,28 @@
           <Property Name="DefectCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="DefectGroupId" Type="Int32" />
         </EntityType>
+        <EntityType Name="OrderQuestion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="Question" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Answer" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="CellableModel.FK_Orders_OrderId" FromRole="OrderQuestion" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Orders_OrderId">
+          <End Type="CellableModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="CellableModel.OrderQuestion" Role="OrderQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderQuestion">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1241,17 +1277,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="CellableModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CellableModel.User">
               <MappingFragment StoreEntitySet="User">
@@ -1277,6 +1302,8 @@
           <EntitySetMapping Name="UserAnswers">
             <EntityTypeMapping TypeName="CellableModel.UserAnswer">
               <MappingFragment StoreEntitySet="UserAnswers">
+                <ScalarProperty Name="UserAnswerId" ColumnName="UserAnswerId" />
+                <ScalarProperty Name="DefectGroupId" ColumnName="DefectGroupId" />
                 <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
                 <ScalarProperty Name="Answer" ColumnName="Answer" />
                 <ScalarProperty Name="PossibleDefectId" ColumnName="PossibleDefectId" />
@@ -1384,6 +1411,16 @@
                 <ScalarProperty Name="DefectCost" ColumnName="DefectCost" />
                 <ScalarProperty Name="DefectName" ColumnName="DefectName" />
                 <ScalarProperty Name="DefectTemplateId" ColumnName="DefectTemplateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderQuestions">
+            <EntityTypeMapping TypeName="CellableModel.OrderQuestion">
+              <MappingFragment StoreEntitySet="OrderQuestions">
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

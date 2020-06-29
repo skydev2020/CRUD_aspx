@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="CellableModel.PossibleDefect" Width="1.5" PointX="4.875" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CellableModel.State" Width="1.5" PointX="12.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="CellableModel.StorageCapacity" Width="1.5" PointX="2.25" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CellableModel.sysdiagram" Width="1.5" PointX="6.5" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CellableModel.User" Width="1.5" PointX="9.375" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CellableModel.UserAnswer" Width="1.5" PointX="7.125" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CellableModel.UserPhone" Width="1.5" PointX="4.875" PointY="0.5" IsExpanded="true" />
@@ -46,6 +45,8 @@
         <AssociationConnector Association="CellableModel.FK_VersionCarrier_Carrier" />
         <AssociationConnector Association="CellableModel.FK_VersionCarrier_PhoneVersion" />
         <EntityTypeShape EntityType="CellableModel.DefectTemplate" Width="1.5" PointX="6.875" PointY="11" />
+        <EntityTypeShape EntityType="CellableModel.OrderQuestion" Width="1.5" PointX="11.625" PointY="13.125" />
+        <AssociationConnector Association="CellableModel.FK_Orders_OrderId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

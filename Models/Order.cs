@@ -15,6 +15,12 @@ namespace EF_CRUD.Models
 
     public partial class Order
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Order()
+        {
+            this.OrderQuestions = new HashSet<OrderQuestion>();
+        }
+
         public int OrderID { get; set; }
         public decimal Amount { get; set; }
         public int UserId { get; set; }
@@ -42,5 +48,8 @@ namespace EF_CRUD.Models
         [Display(Name = "Payment Type")]
         public virtual PaymentType PaymentType { get; set; }
         public virtual Promo Promo { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderQuestion> OrderQuestions { get; set; }
     }
 }

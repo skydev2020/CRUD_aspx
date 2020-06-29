@@ -12,12 +12,13 @@ namespace EF_CRUD.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class OrderQuestion
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int id { get; set; }
+        public Nullable<int> OrderId { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
+    
+        public virtual Order Order { get; set; }
     }
 }

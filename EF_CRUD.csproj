@@ -197,6 +197,9 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>CellableEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderQuestion.cs">
+      <DependentUpon>CellableEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OrderStatu.cs">
       <DependentUpon>CellableEntities.tt</DependentUpon>
     </Compile>
@@ -225,9 +228,6 @@
       <DependentUpon>CellableEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StorageCapacity.cs">
-      <DependentUpon>CellableEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>CellableEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SystemSetting.cs">
