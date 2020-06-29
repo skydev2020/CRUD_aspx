@@ -149,7 +149,9 @@
                 @Html.DisplayFor(modelItem => item.OrderId)
             </td>
             <td>
-                <a style="color: blueviolet; border-bottom: initial; cursor: default;" id="orderBtn" @Html.Partial("OrderDetails")>@Html.DisplayFor(modelItem => item.Brand) @Html.DisplayFor(modelItem => item.Version)</a>
+                <a style="color: blueviolet; border-bottom: initial; cursor: default;" id="orderBtn"> 
+                    @Html.Partial("OrderDetails") @Html.DisplayFor(modelItem => item.Brand) @Html.DisplayFor(modelItem => item.Version)
+                </a>
             </td>
             <td>
                 $@Html.DisplayFor(modelItem => item.Amount)
