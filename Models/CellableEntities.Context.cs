@@ -33,7 +33,7 @@ namespace EF_CRUD.Models
         public virtual DbSet<PhoneVersion> PhoneVersions { get; set; }
         public virtual DbSet<PossibleDefect> PossibleDefects { get; set; }
         public virtual DbSet<State> States { get; set; }
-        public virtual DbSet<StorageCapacity> StorageCapacities { get; set; }        
+        public virtual DbSet<StorageCapacity> StorageCapacities { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAnswer> UserAnswers { get; set; }
         public virtual DbSet<UserPhone> UserPhones { get; set; }

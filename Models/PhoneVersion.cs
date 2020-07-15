@@ -32,6 +32,7 @@ namespace EF_CRUD.Models
         public Nullable<int> Views { get; set; }
         public Nullable<int> Purchases { get; set; }
         public Nullable<bool> Active { get; set; }
+        public Nullable<decimal> Ranking { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PossibleDefect> PossibleDefects { get; set; }

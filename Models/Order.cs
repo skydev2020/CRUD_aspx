@@ -11,8 +11,7 @@ namespace EF_CRUD.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +19,7 @@ namespace EF_CRUD.Models
         {
             this.OrderQuestions = new HashSet<OrderQuestion>();
         }
-
+    
         public int OrderID { get; set; }
         public decimal Amount { get; set; }
         public int UserId { get; set; }
@@ -30,25 +29,14 @@ namespace EF_CRUD.Models
         public Nullable<int> PaymentTypeId { get; set; }
         public Nullable<int> PromoId { get; set; }
         public Nullable<int> UserPhoneId { get; set; }
-
-        [Display(Name = "Payment User Name")]
         public string PaymentUserName { get; set; }
-
-        [Display(Name = "USPS Tracking ID")]
         public string USPSTrackingId { get; set; }
-
-        [Display(Name = "Mailing Label")]
         public string MailingLabel { get; set; }
-
+    
         public virtual User User { get; set; }
-
-        [Display(Name = "Order Status")]
         public virtual OrderStatu OrderStatu { get; set; }
-
-        [Display(Name = "Payment Type")]
         public virtual PaymentType PaymentType { get; set; }
         public virtual Promo Promo { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderQuestion> OrderQuestions { get; set; }
     }
