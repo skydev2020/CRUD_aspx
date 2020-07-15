@@ -120,99 +120,102 @@
 
     @Html.HiddenFor(m => m.VersionId)
     @Html.Hidden("BaseCost", 0)
-    <table style="width:60%; margin-left:100px; margin-right:auto;">
-        <tr>
-            <td style="padding:6px; text-align:right; width:20%">
-                <b>@Html.DisplayNameFor(model => model.Phone.Brand)</b>
-            </td>
-            <td style="padding:6px;">
-                @Html.DropDownList("PhoneId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Phone.Brand, "", new { @class = "text-danger" })
-            </td>
-            <td rowspan="4">
-                <img src="@ViewBag.imageLocation/@Html.DisplayFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })"
-                     alt="@Html.DisplayFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })"
-                     style="height:250px; width:130px;" />
-                <br />
-                @Html.DisplayFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
-            </td>
-        </tr>
-        @foreach (var item in ViewBag.Carriers)
-        {
-            <tr>
-                <td style="padding:6px; text-align:right;">
-                    <b>@item.CarrierName Value</b>
-                </td>
-                <td style="padding:6px;">
-                    <input type="text" id="Carrier_@item.CarrierId" name="Carrier_@item.CarrierId"
-                           @foreach (var vs in ViewBag.VersionCarriers) { if (item.CarrierId == vs.CarrierId) { @Html.Raw("value='" + vs.Value + "'") ; } }
-                           class="form-control" />
-                    <div id="ValidationMessage_@item.CarrierId" class="text-danger"></div>
-                </td>
-            </tr>
-        }
+<table style="width:60%; margin-left:100px; margin-right:auto;">
+    <tr>
+        <td style="padding:6px; text-align:right; width:20%">
+            <b>@Html.DisplayNameFor(model => model.Phone.Brand)</b>
+        </td>
+        <td style="padding:6px;">
+            @Html.DropDownList("PhoneId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Phone.Brand, "", new { @class = "text-danger" })
+        </td>
+        <td rowspan="4">
+            <img src="@ViewBag.imageLocation/@Html.DisplayFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })"
+                 alt="@Html.DisplayFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })"
+                 style="height:250px; width:130px;" />
+            <br />
+            @Html.DisplayFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+    </tr>
+    @foreach (var item in ViewBag.Carriers)
+    {
         <tr>
             <td style="padding:6px; text-align:right;">
-                <b>@Html.DisplayNameFor(model => model.Version)</b>
+                <b>@item.CarrierName Value</b>
             </td>
             <td style="padding:6px;">
-                @Html.EditorFor(model => model.Version, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Version, "", new { @class = "text-danger" })
+                <input type="text" id="Carrier_@item.CarrierId" name="Carrier_@item.CarrierId"
+                       @foreach (var vs in ViewBag.VersionCarriers) { if (item.CarrierId == vs.CarrierId) { @Html.Raw("value='" + vs.Value + "'") ; } }
+                       class="form-control" />
+                <div id="ValidationMessage_@item.CarrierId" class="text-danger"></div>
             </td>
         </tr>
-        <tr>
+    }
+    <tr>
+        <td style="padding:6px; text-align:right;">
+            <b>@Html.DisplayNameFor(model => model.Version)</b>
+        </td>
+        <td style="padding:6px;">
+            @Html.EditorFor(model => model.Version, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Version, "", new { @class = "text-danger" })
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:6px; text-align:right;">
+            <b>@Html.DisplayNameFor(model => model.Ranking)</b>
+        </td>
+        <td style="padding:6px;">
+            @Html.EditorFor(model => model.Ranking, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Ranking, "", new { @class = "text-danger" })
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:6px; text-align:right;">
+            <b>@Html.DisplayNameFor(model => model.StorageCapacity.StorageCapacity1)</b>
+        </td>
+        <td style="padding:6px;">
+            @foreach (var item in ViewBag.StorageCapacities)
+            {
+                <input type="checkbox" id="Capacity_@item.StorageCapacityId" name="Capacity_@item.StorageCapacityId" value="@item.StorageCapacityId" onclick="ShowValue(@item.StorageCapacityId)"
+                       @foreach (var versionCapacity in ViewBag.VersionStorageCapacities) { if (versionCapacity.StorageCapacityId == item.StorageCapacityId) { @Html.Raw(" checked") ; } } /> @item.Description @Html.Raw("&nbsp;&nbsp;")
+                }
+            <div id="CapacityValidationMessage" class="text-danger"></div>
+        </td>
+    </tr>
+    @foreach (var sc in ViewBag.StorageCapacities)
+    {
+        <tr id="Div_@sc.StorageCapacityId" name="Div_@sc.StorageCapacityId"
+            @{ var display = true; }
+            @foreach (var vsc in ViewBag.VersionStorageCapacities) { if (sc.StorageCapacityId != vsc.StorageCapacityId) { display = false; } else { display = true; break; } }
+            @if (!display) { @Html.Raw(" style=display:none;") ; }>
             <td style="padding:6px; text-align:right;">
-                <b>@Html.DisplayNameFor(model => model.StorageCapacity.StorageCapacity1)</b>
+                <b>@sc.Description Value</b>
             </td>
             <td style="padding:6px;">
-                @foreach (var item in ViewBag.StorageCapacities)
-                {
-                    <input type="checkbox" id="Capacity_@item.StorageCapacityId" name="Capacity_@item.StorageCapacityId" value="@item.StorageCapacityId" onclick="ShowValue(@item.StorageCapacityId)"
-                           @foreach (var versionCapacity in ViewBag.VersionStorageCapacities) { if (versionCapacity.StorageCapacityId == item.StorageCapacityId) { @Html.Raw(" checked") ; } } /> @item.Description @Html.Raw("&nbsp;&nbsp;")
-                    }
-                <div id="CapacityValidationMessage" class="text-danger"></div>
+                <input type="text" id="Value_@sc.StorageCapacityId" name="Value_@sc.StorageCapacityId"
+                       @foreach (var vsc in ViewBag.VersionStorageCapacities) { if (sc.StorageCapacityId == vsc.StorageCapacityId) { @Html.Raw("value='" + vsc.Value + "'") ; } }
+                       class="form-control" />
+                <div id="ValidationMessage_@sc.StorageCapacityId" class="text-danger"></div>
             </td>
         </tr>
-        @foreach (var sc in ViewBag.StorageCapacities)
-        {
-            <tr id="Div_@sc.StorageCapacityId" name="Div_@sc.StorageCapacityId"
-                @{ var display = true; }
-                @foreach (var vsc in ViewBag.VersionStorageCapacities) { if (sc.StorageCapacityId != vsc.StorageCapacityId) { display = false; } else { display = true; break; } }
-                @if (!display) { @Html.Raw(" style=display:none;") ; }>
-                <td style="padding:6px; text-align:right;">
-                    <b>@sc.Description Value</b>
-                </td>
-                <td style="padding:6px;">
-                    <input type="text" id="Value_@sc.StorageCapacityId" name="Value_@sc.StorageCapacityId"
-                           @foreach (var vsc in ViewBag.VersionStorageCapacities) 
-                           { 
-                               if (sc.StorageCapacityId == vsc.StorageCapacityId) 
-                               {
-                                   @Html.Raw("value='" + vsc.Value + "'") ;
-                               }
-                           }
-                           class="form-control" />
-                    <div id="ValidationMessage_@sc.StorageCapacityId" class="text-danger"></div>
-                </td>
-            </tr>
-        }
-        <tr>
-            <td style="padding:6px; text-align:right;">
-                <b>@Html.LabelFor(model => model.ImageName)</b>
-            </td>
-            <td style="padding:6px;">
-                <input type="file" name="imageFile" id="imageFile" accept=".jpg,.png,.bmp" onchange="validate_fileupload(this);" />
-                @Html.HiddenFor(model => model.ImageName)
-                <div id="ValidationMessage" class="text-danger"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align:center">
-                <input type="submit" value="Save" class="btn btn-default" onclick="return valid_form();" />
-                <input type="button" value="Cancel" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("Index", "PhoneVersions") + "'");" />
-            </td>
-        </tr>
-    </table>
+    }
+    <tr>
+        <td style="padding:6px; text-align:right;">
+            <b>@Html.LabelFor(model => model.ImageName)</b>
+        </td>
+        <td style="padding:6px;">
+            <input type="file" name="imageFile" id="imageFile" accept=".jpg,.png,.bmp" onchange="validate_fileupload(this);" />
+            @Html.HiddenFor(model => model.ImageName)
+            <div id="ValidationMessage" class="text-danger"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align:center">
+            <input type="submit" value="Save" class="btn btn-default" onclick="return valid_form();" />
+            <input type="button" value="Cancel" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("Index", "PhoneVersions") + "'");" />
+        </td>
+    </tr>
+</table>
 }
 
 @section Scripts {
