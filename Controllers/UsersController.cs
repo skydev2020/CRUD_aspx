@@ -38,7 +38,7 @@ namespace EF_CRUD.Controllers
             ViewBag.OrderCount = orders.Count();
 
             // Get Most Viewed Versions
-            IList<PhoneVersion> viewedVersions = db.PhoneVersions.ToList().Take(10).OrderByDescending(x => x.Views).ToList();
+            IList<PhoneVersion> viewedVersions = db.PhoneVersions.ToList().Where(x=> x.Active == true).OrderByDescending(x => x.Views).ToList();
             ViewBag.MostViewed = viewedVersions;
 
             // Get Most Purchased Versions
